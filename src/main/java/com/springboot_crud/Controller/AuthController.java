@@ -1,5 +1,6 @@
 package com.springboot_crud.Controller;
 
+import com.springboot_crud.DTO.LoginDTO;
 import com.springboot_crud.DTO.RegisterDTO;
 import com.springboot_crud.DTO.ResponseDTO;
 import com.springboot_crud.Entity.User;
@@ -32,7 +33,7 @@ public class AuthController {
         this.walletService=walletService;
     }
 
-    @PostMapping("/user")
+    @PostMapping("/register")
     public ResponseEntity<ResponseDTO> register(@Valid @RequestBody RegisterDTO registerDTO, BindingResult bindingResult)
     {
         if(bindingResult.hasErrors())
@@ -40,7 +41,6 @@ public class AuthController {
             return getGenericResponseDTOResponseEntity(bindingResult);
         }
         //create the user
-        System.out.println(registerDTO);
         User newUser= this.authService.register(registerDTO);
         //create an object of the wallet
         Wallet wallet=new Wallet();
@@ -50,10 +50,21 @@ public class AuthController {
         wallet.setWalletDebit(BigDecimal.valueOf(0.0));// Initialize wallet balance
         Wallet newWallet = this.walletService.createWallet(wallet);
         newUser.setWallet(newWallet); // Set the newly created wallet to the user
-         ResponseDTO response = new ResponseDTO<>(true,"register successfully",newUser);
+         ResponseDTO response = new ResponseDTO(true,"register successfully",newUser);
          return ResponseEntity.ok(response);
 
     }
+
+//    @PostMapping("/login")
+//    public ResponseEntity <ResponseDTO> login(@Valid @RequestBody LoginDTO loginDTO, BindingResult bindingResult){
+//        if(bindingResult.hasErrors())
+//        {
+//            return getGenericResponseDTOResponseEntity(bindingResult);
+//        }
+//
+//
+//
+//    }
 
     public static ResponseEntity<ResponseDTO> getGenericResponseDTOResponseEntity(BindingResult result) {
         Map<String, String> errors = new HashMap<>();

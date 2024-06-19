@@ -1,5 +1,7 @@
 package com.springboot_crud.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.springboot_crud.DTO.WalletDTO;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -30,6 +32,7 @@ public class User {
     private String phoneNumber;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Wallet wallet;
 
     @CreationTimestamp

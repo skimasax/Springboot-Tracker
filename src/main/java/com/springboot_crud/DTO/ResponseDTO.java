@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.util.Map;
 
 
-public class ResponseDTO<T> {
+public class ResponseDTO{
     private boolean status;
     private String message;
     private Object data;
