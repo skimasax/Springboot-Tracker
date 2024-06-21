@@ -3,6 +3,7 @@ package com.springboot_crud.Controller;
 import com.springboot_crud.DTO.ApiResponseDTO;
 import com.springboot_crud.DTO.InflowDTO;
 import com.springboot_crud.ENUM.PaymentStatus;
+import com.springboot_crud.Exception.CustomException;
 import com.springboot_crud.Model.Inflow;
 import com.springboot_crud.Model.User;
 import com.springboot_crud.Service.InflowsService;
@@ -43,6 +44,15 @@ public class InflowController {
         return ResponseEntity.ok(responseDTO);
 
     }
+
+    @GetMapping("{id}")
+    public ResponseEntity<ApiResponseDTO> singleInflow(@PathVariable Long id)
+    {
+        Optional<Inflow> inflow = this.inflowsService.singleInflow(id);
+            ApiResponseDTO apiResponseDTO = new ApiResponseDTO(true,"Inflow fetched successfully",inflow);
+            return ResponseEntity.ok(apiResponseDTO);
+    }
+
 
     @PostMapping
     public ResponseEntity<ApiResponseDTO> createInflow(@Valid @RequestBody InflowDTO inflowDTO , BindingResult bindingResult)

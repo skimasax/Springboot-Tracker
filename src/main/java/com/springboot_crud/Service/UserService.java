@@ -1,5 +1,6 @@
 package com.springboot_crud.Service;
 
+import com.springboot_crud.Exception.CustomException;
 import com.springboot_crud.Model.User;
 import com.springboot_crud.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class UserService {
         Optional<User> optionalUser=userRepository.findById(id);
         if(optionalUser.isEmpty())
         {
-            throw new RuntimeException("User not found");
+            throw new CustomException("User not found");
         }else{
             return optionalUser;
         }
