@@ -54,10 +54,12 @@ public class InflowController {
 
         //get the user
         Optional<User> userOptional = this.userService.singleUser(inflowDTO.getUser());
-        if(!userOptional.isPresent())
+        if(userOptional.isEmpty())
         {
-            return new ResponseEntity<>(new ApiResponseDTO(false, "User not found", new User()), HttpStatus.BAD_REQUEST);
+            ApiResponseDTO responseDTO=new ApiResponseDTO(false, "User not found", new User());
+            return ResponseEntity.status(404).body(responseDTO);
         }
+
         User user = userOptional.get();
         //save the inflow data
         Inflow inflow = new Inflow();
