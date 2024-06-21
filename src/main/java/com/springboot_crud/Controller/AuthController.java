@@ -1,10 +1,9 @@
 package com.springboot_crud.Controller;
 
-import com.springboot_crud.DTO.LoginDTO;
 import com.springboot_crud.DTO.RegisterDTO;
-import com.springboot_crud.DTO.ResponseDTO;
-import com.springboot_crud.Entity.User;
-import com.springboot_crud.Entity.Wallet;
+import com.springboot_crud.DTO.ApiResponseDTO;
+import com.springboot_crud.Model.User;
+import com.springboot_crud.Model.Wallet;
 import com.springboot_crud.Service.AuthService;
 import com.springboot_crud.Service.WalletService;
 import jakarta.validation.Valid;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.function.EntityResponse;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -34,7 +32,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ResponseDTO> register(@Valid @RequestBody RegisterDTO registerDTO, BindingResult bindingResult)
+    public ResponseEntity<ApiResponseDTO> register(@Valid @RequestBody RegisterDTO registerDTO, BindingResult bindingResult)
     {
         if(bindingResult.hasErrors())
         {
@@ -50,7 +48,7 @@ public class AuthController {
         wallet.setWalletDebit(BigDecimal.valueOf(0.0));// Initialize wallet balance
         Wallet newWallet = this.walletService.createWallet(wallet);
         newUser.setWallet(newWallet); // Set the newly created wallet to the user
-         ResponseDTO response = new ResponseDTO(true,"register successfully",newUser);
+         ApiResponseDTO response = new ApiResponseDTO(true,"register successfully",newUser);
          return ResponseEntity.ok(response);
 
     }
@@ -66,12 +64,12 @@ public class AuthController {
 //
 //    }
 
-    public static ResponseEntity<ResponseDTO> getGenericResponseDTOResponseEntity(BindingResult result) {
+    public static ResponseEntity<ApiResponseDTO> getGenericResponseDTOResponseEntity(BindingResult result) {
         Map<String, String> errors = new HashMap<>();
         for (FieldError error : result.getFieldErrors()) {
             errors.put(error.getField(), error.getDefaultMessage());
         }
-        ResponseDTO errorResponse = new ResponseDTO();
+        ApiResponseDTO errorResponse = new ApiResponseDTO();
         errorResponse.setStatus(false);
         errorResponse.setMessage("Validation error occurred");
         errorResponse.setErrorMessage(errors);;

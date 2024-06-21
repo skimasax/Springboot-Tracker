@@ -1,6 +1,6 @@
 package com.springboot_crud.Repository;
 
-import com.springboot_crud.Entity.User;
+import com.springboot_crud.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

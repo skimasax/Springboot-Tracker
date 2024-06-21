@@ -1,4 +1,4 @@
-package com.springboot_crud.Entity;
+package com.springboot_crud.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;

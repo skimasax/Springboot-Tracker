@@ -1,6 +1,6 @@
 package com.springboot_crud.Service;
 
-import com.springboot_crud.Entity.User;
+import com.springboot_crud.Model.User;
 import com.springboot_crud.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

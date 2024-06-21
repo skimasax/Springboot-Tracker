@@ -1,8 +1,7 @@
 package com.springboot_crud.Service;
 
-import com.springboot_crud.DTO.LoginDTO;
 import com.springboot_crud.DTO.RegisterDTO;
-import com.springboot_crud.Entity.User;
+import com.springboot_crud.Model.User;
 import com.springboot_crud.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,13 +39,6 @@ public class AuthService {
                 return this.userRepository.save(user);
             }
 
-//            public User login(LoginDTO loginDTO)
-//            {
-//                Optional<User> optionalUser=userRepository.findByEmail(loginDTO.getEmail());
-//                if(optionalUser.isEmpty())
-//                {
-//                    throw new RuntimeException("Email does not exist");
-//                }
-//            }
+
 
 }

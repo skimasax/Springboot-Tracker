@@ -1,27 +1,22 @@
 package com.springboot_crud.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.util.Map;
 
 
-public class ResponseDTO{
+public class ApiResponseDTO {
     private boolean status;
     private String message;
     private Object data;
 
 
 
-    public ResponseDTO(boolean status, String message, Object data) {
+    public ApiResponseDTO(boolean status, String message, Object data) {
         this.status = status;
         this.message = message;
         this.data = data;
     }
 
-    public ResponseDTO() {
+    public ApiResponseDTO() {
     }
 
     public boolean isStatus() {

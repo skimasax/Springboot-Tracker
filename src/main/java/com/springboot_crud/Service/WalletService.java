@@ -1,6 +1,6 @@
 package com.springboot_crud.Service;
 
-import com.springboot_crud.Entity.Wallet;
+import com.springboot_crud.Model.Wallet;
 import com.springboot_crud.Repository.WalletRepository;
 import org.springframework.stereotype.Service;
 

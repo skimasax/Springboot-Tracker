@@ -1,9 +1,5 @@
 package com.springboot_crud.DTO;
 
-import com.springboot_crud.Entity.User;
-
-import java.util.List;
-
 public class UserResponseDTO {
     private String fullName;
     private String lastName;

@@ -1,12 +1,12 @@
-package com.springboot_crud.Entity;
+package com.springboot_crud.Model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.springboot_crud.DTO.WalletDTO;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -34,6 +34,10 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Wallet wallet;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Inflow> inflow;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
