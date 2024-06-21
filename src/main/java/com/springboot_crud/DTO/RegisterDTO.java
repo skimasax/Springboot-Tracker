@@ -1,6 +1,7 @@
 package com.springboot_crud.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;

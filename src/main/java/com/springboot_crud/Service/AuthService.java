@@ -33,6 +33,7 @@ public class AuthService {
                 User user=new User();
                 user.setFirstName(registerDTO.getFirstName());
                 user.setLastName(registerDTO.getLastName());
+                user.setPhoneNumber("08135330301");
                 //harsh the password before saving
                 user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
                 user.setEmail(registerDTO.getEmail());

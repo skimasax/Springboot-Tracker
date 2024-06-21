@@ -40,12 +40,17 @@ public class AuthController {
         }
         //create the user
         User newUser= this.authService.register(registerDTO);
+        System.out.println(newUser);
         //create an object of the wallet
         Wallet wallet=new Wallet();
         wallet.setUser(newUser);
-        wallet.setWalletNumber(12345890);
+        wallet.setWalletNumber(1234580);
         wallet.setWalletCredit(BigDecimal.valueOf(0));
-        wallet.setWalletDebit(BigDecimal.valueOf(0.0));// Initialize wallet balance
+        wallet.setWalletDebit(BigDecimal.valueOf(0.0));
+        BigDecimal walletCredit = wallet.getWalletCredit();
+        BigDecimal walletDebit = wallet.getWalletDebit();
+        BigDecimal total = walletCredit.subtract(walletDebit);
+        wallet.setTotal(total);
         Wallet newWallet = this.walletService.createWallet(wallet);
         newUser.setWallet(newWallet); // Set the newly created wallet to the user
          ApiResponseDTO response = new ApiResponseDTO(true,"register successfully",newUser);
