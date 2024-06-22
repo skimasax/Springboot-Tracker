@@ -1,8 +1,6 @@
 package com.springboot_crud.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.EnumNaming;
-import com.springboot_crud.Model.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
