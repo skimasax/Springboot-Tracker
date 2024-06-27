@@ -1,11 +1,11 @@
 package com.springboot_crud.Controller;
 
-import com.springboot_crud.DTO.RegisterDTO;
+import com.springboot_crud.DTO.RegisterRequest;
 import com.springboot_crud.DTO.ApiResponseDTO;
 import com.springboot_crud.Model.User;
 import com.springboot_crud.Model.Wallet;
-import com.springboot_crud.Service.AuthService;
-import com.springboot_crud.Service.WalletService;
+import com.springboot_crud.Service.impl.AuthServiceImpl;
+import com.springboot_crud.Service.impl.WalletServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,24 +22,24 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class AuthController {
     @Autowired
-    public final AuthService authService;
-    public final WalletService walletService;
+    public final AuthServiceImpl authServiceImpl;
+    public final WalletServiceImpl walletServiceImpl;
 
-    public AuthController(AuthService authService, WalletService walletService)
+    public AuthController(AuthServiceImpl authServiceImpl, WalletServiceImpl walletServiceImpl)
     {
-        this.authService=authService;
-        this.walletService=walletService;
+        this.authServiceImpl=authServiceImpl;
+        this.walletServiceImpl=walletServiceImpl;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponseDTO> register(@Valid @RequestBody RegisterDTO registerDTO, BindingResult bindingResult)
+    public ResponseEntity<ApiResponseDTO> register(@Valid @RequestBody RegisterRequest registerRequest, BindingResult bindingResult)
     {
         if(bindingResult.hasErrors())
         {
             return getGenericResponseDTOResponseEntity(bindingResult);
         }
         //create the user
-        User newUser= this.authService.register(registerDTO);
+        User newUser= this.authServiceImpl.register(registerRequest);
         System.out.println(newUser);
         //create an object of the wallet
         Wallet wallet=new Wallet();
@@ -51,7 +51,7 @@ public class AuthController {
         BigDecimal walletDebit = wallet.getWalletDebit();
         BigDecimal total = walletCredit.subtract(walletDebit);
         wallet.setTotal(total);
-        Wallet newWallet = this.walletService.createWallet(wallet);
+        Wallet newWallet = this.walletServiceImpl.createWallet(wallet);
         newUser.setWallet(newWallet); // Set the newly created wallet to the user
          ApiResponseDTO response = new ApiResponseDTO(true,"register successfully",newUser);
          return ResponseEntity.ok(response);

@@ -1,9 +1,11 @@
 package com.springboot_crud.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springboot_crud.DTO.WalletTopupDTO;
+import com.springboot_crud.DTO.VerifyPaymentRequest;
+import com.springboot_crud.DTO.WalletTopupRequest;
 import com.springboot_crud.Exception.CustomException;
 import com.springboot_crud.Model.User;
+import com.springboot_crud.Service.impl.UserServiceImpl;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -25,7 +27,7 @@ import java.util.Optional;
 public class PaystackService {
 
     @Autowired
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
 
     @Value("${paystack.secret.key}")
@@ -34,12 +36,12 @@ public class PaystackService {
     private static final String BASE_URL = "https://api.paystack.co";
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public PaystackService(UserService userService) {
-        this.userService = userService;
+    public PaystackService(UserServiceImpl userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
     }
 
-    public String verifyPayment(String reference) throws CustomException {
-        String url = BASE_URL + "/transaction/verify/" + reference;
+    public String verifyPaystackPayment(VerifyPaymentRequest verifyPaymentRequest) throws CustomException {
+        String url = BASE_URL + "/transaction/verify/" + verifyPaymentRequest.getReference();
 
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(url);
@@ -57,10 +59,10 @@ public class PaystackService {
         }
     }
 
-    public String initiateTransaction(WalletTopupDTO walletTopupDTO) throws CustomException {
+    public String initiateTransaction(WalletTopupRequest walletTopupRequest) throws CustomException {
         String url = BASE_URL + "/transaction/initialize";
 
-        Optional<User> userOptional=this.userService.singleUser(walletTopupDTO.getUser());
+        Optional<User> userOptional=this.userServiceImpl.singleUser(walletTopupRequest.getUser());
         if(userOptional.isEmpty()){
             throw new CustomException("User does not exist");
         }
@@ -69,7 +71,7 @@ public class PaystackService {
 
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("email", user.getEmail());
-        requestBody.put("amount", walletTopupDTO.getAmount());
+        requestBody.put("amount", walletTopupRequest.getAmount());
 
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpPost request = new HttpPost(url);

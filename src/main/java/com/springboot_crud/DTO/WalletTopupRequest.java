@@ -1,10 +1,9 @@
 package com.springboot_crud.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class WalletTopupDTO {
+public class WalletTopupRequest {
     @NotNull(message = "user_id is required")
     @JsonProperty("user_id")
     private Long user;
@@ -13,12 +12,12 @@ public class WalletTopupDTO {
     @JsonProperty("amount")
     private Double amount;
 
-    public WalletTopupDTO(Long user, Double amount) {
+    public WalletTopupRequest(Long user, Double amount) {
         this.user = user;
         this.amount = amount;
     }
 
-    public WalletTopupDTO() {
+    public WalletTopupRequest() {
     }
 
     public @NotNull(message = "user_id is required") Long getUser() {

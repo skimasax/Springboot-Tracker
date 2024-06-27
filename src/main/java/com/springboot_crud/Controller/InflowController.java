@@ -2,15 +2,12 @@ package com.springboot_crud.Controller;
 
 import com.springboot_crud.DTO.ApiResponseDTO;
 import com.springboot_crud.DTO.InflowDTO;
-import com.springboot_crud.ENUM.PaymentStatus;
-import com.springboot_crud.Exception.CustomException;
 import com.springboot_crud.Model.Inflow;
 import com.springboot_crud.Model.User;
-import com.springboot_crud.Service.InflowsService;
-import com.springboot_crud.Service.UserService;
+import com.springboot_crud.Service.impl.InflowServiceImpl;
+import com.springboot_crud.Service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -21,25 +18,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.springboot_crud.Controller.AuthController.getGenericResponseDTOResponseEntity;
-
 @RestController
 @RequestMapping("api/v1/inflow")
 public class InflowController {
     @Autowired
-    private final InflowsService inflowsService;
+    private final InflowServiceImpl inflowServiceImpl;
     @Autowired
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
-    public InflowController(InflowsService inflowsService, UserService userService) {
-        this.inflowsService = inflowsService;
-        this.userService = userService;
+    public InflowController(InflowServiceImpl inflowServiceImpl, UserServiceImpl userServiceImpl) {
+        this.inflowServiceImpl = inflowServiceImpl;
+        this.userServiceImpl = userServiceImpl;
     }
 
     @GetMapping
     public ResponseEntity<ApiResponseDTO> allInflows()
     {
-        List<Inflow> inflows = this.inflowsService.allInflows();
+        List<Inflow> inflows = this.inflowServiceImpl.allInflows();
         ApiResponseDTO responseDTO = new ApiResponseDTO(true,"Inflows fetched successfully",inflows);
         return ResponseEntity.ok(responseDTO);
 
@@ -48,7 +43,7 @@ public class InflowController {
     @GetMapping("{id}")
     public ResponseEntity<ApiResponseDTO> singleInflow(@PathVariable Long id)
     {
-        Optional<Inflow> inflow = this.inflowsService.singleInflow(id);
+        Optional<Inflow> inflow = this.inflowServiceImpl.singleInflow(id);
             ApiResponseDTO apiResponseDTO = new ApiResponseDTO(true,"Inflow fetched successfully",inflow);
             return ResponseEntity.ok(apiResponseDTO);
     }
@@ -63,7 +58,7 @@ public class InflowController {
         }
 
         //get the user
-        Optional<User> userOptional = this.userService.singleUser(inflowDTO.getUser());
+        Optional<User> userOptional = this.userServiceImpl.singleUser(inflowDTO.getUser());
         if(userOptional.isEmpty())
         {
             ApiResponseDTO responseDTO=new ApiResponseDTO(false, "User not found", new User());
@@ -79,7 +74,7 @@ public class InflowController {
         inflow.setPrice(inflowDTO.getPrice());
         Double totalPrice=inflow.getQuantity() * inflow.getPrice();
         inflow.setTotalPrice(totalPrice);
-        this.inflowsService.createInflow(inflow);
+        this.inflowServiceImpl.createInflow(inflow);
         ApiResponseDTO apiResponseDTO = new ApiResponseDTO(true,"Inflow created successfully",inflow);
         return ResponseEntity.ok(apiResponseDTO);
 
@@ -90,7 +85,7 @@ public class InflowController {
     @DeleteMapping("/{id}")
     public  ResponseEntity <ApiResponseDTO> deleteInflow(@PathVariable Long id)
     {
-        boolean isDeleted = this.inflowsService.deleteInflow(id);
+        boolean isDeleted = this.inflowServiceImpl.deleteInflow(id);
 
         if (isDeleted) {
             ApiResponseDTO response = new ApiResponseDTO(true, "Inflow deleted successfully", new Inflow());

@@ -2,13 +2,9 @@ package com.springboot_crud.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 
-public class LoginDTO {
+public class LoginRequest {
 
     @NotBlank(message = "Email is required")
     @JsonProperty("email")
@@ -18,12 +14,12 @@ public class LoginDTO {
     @JsonProperty("password")
     private String password;
 
-    public LoginDTO(String email, String password) {
+    public LoginRequest(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
-    public LoginDTO() {
+    public LoginRequest() {
     }
 
     public @NotBlank(message = "Email is required") String getEmail() {

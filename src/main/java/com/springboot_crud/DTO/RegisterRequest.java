@@ -1,7 +1,6 @@
 package com.springboot_crud.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -9,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class RegisterDTO {
+public class RegisterRequest {
     @NotBlank(message = "First name is required")
     @JsonProperty("first_name")
     private String firstName;
