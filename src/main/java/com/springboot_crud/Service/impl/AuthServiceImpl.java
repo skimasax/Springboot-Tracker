@@ -4,11 +4,13 @@ import com.springboot_crud.DTO.RegisterRequest;
 import com.springboot_crud.Model.User;
 import com.springboot_crud.Repository.UserRepository;
 import com.springboot_crud.Service.AuthService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
 
 @Service
 public class AuthServiceImpl implements AuthService {

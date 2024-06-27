@@ -2,6 +2,7 @@ package com.springboot_crud.Controller;
 
 import com.springboot_crud.DTO.ApiResponseDTO;
 import com.springboot_crud.Model.User;
+import com.springboot_crud.Service.UserService;
 import com.springboot_crud.Service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,15 +16,15 @@ import java.util.List;
 @RequestMapping("api/v1/users")
 public class UserController {
     @Autowired
-    private final UserServiceImpl userServiceImpl;
+    private final UserService userService;
 
-    public UserController(UserServiceImpl userServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public ResponseEntity<ApiResponseDTO> allUsers(){
-            List<User> users = userServiceImpl.allUsers();
+            List<User> users = userService.allUsers();
             ApiResponseDTO responseDTO=new ApiResponseDTO(true,"Users fetched successfully",users);
             return ResponseEntity.ok(responseDTO);
     }
